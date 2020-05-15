@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AutoShop.Models.EntityDB.UnosMagacin>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Magacin")
+        </th>
+        <th>
+            @Html.DisplayName("Sifra")
+        </th>
+        <th>
+            @Html.DisplayName("Naziv proizvoda")
+        </th>
+        <th>
+            @Html.DisplayName("Kolicina")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vreme)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayName(item.AutoDeo_Magacin.Magacin.Grad)
+    </td>
+    <td>
+        @Html.DisplayName(item.AutoDeo_Magacin.IDAutoDeo.ToString())
+    </td>
+    <td>
+        @Html.DisplayName(item.AutoDeo_Magacin.AutoDeo.Naziv)
+    </td>
+    <td>
+        @Html.DisplayName(item.Kolicina.ToString())
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Datum)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Vreme)
+    </td>
+    <td>
+    </td>
+</tr>
+}
+
+</table>

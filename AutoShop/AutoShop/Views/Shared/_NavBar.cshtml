@@ -1,0 +1,78 @@
+﻿
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom:0px;">
+    <a class="navbar-brand" href="@Url.Action("Index","Pocetna")"><span class="fa fa-home" aria-hidden="true" />Magacin</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index","Cart")" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Korpa
+                </a>
+
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="@Url.Action("Index", "Racun")">Pretraga racuna</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="@Url.Action("Index", "User")">Korisnici</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="@Url.Action("Index", "UnosMagacin")">Unosi u magacin</a>
+            </li>
+        </ul>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a style="margin-right:10px; color:white">Korisnik :</a> <a href="@Url.Action("Index", "Registracija")" style="margin-right:10px;">@User.Identity.Name</a>
+
+        }
+
+
+
+    </div>
+</nav>
+
+<div id="Slider">
+
+    <div class="container">
+        <div class="row">
+            <!-- topslider -->
+            <!-- HEADcustom -->
+            <div class="col-md-12 slider-custom">
+
+
+                <div class="custom">
+                    <p>
+                        <a href="index.php" target="_blank" rel="noopener noreferrer"><img src="/images/audi.jpg" alt="Audi auto logo" width="16%"></a><a href="index.php" target="_blank" rel="noopener noreferrer"><img src="/images/vw.jpg" alt="Thule logo" width="16%"></a>
+                        <a href="index.php" target="_blank" rel="noopener noreferrer"><img src="/images/opel.jpg" alt="Case Logc logo" width="16%"></a><a href="index.php" target="_blank" rel="noopener noreferrer"><img src="/images/skoda.jpg" alt="Wynns logo" width="16%"></a>
+                        <a href="index.php" target="_blank" rel="noopener noreferrer"><img src="/images/peugeot.jpg" alt="Konig logo" width="16%"></a><a href="index.php" target="_blank" rel="noopener noreferrer"><img src="/images/citroen.jpg" alt="Kungs logo" width="16%"></a>
+                    </p>
+                </div>
+
+
+
+                <!-- //HEADcustom -->
+                <!-- //topslider -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<style type="text/css">
+    #Slider {
+        position: relative;
+        z-index: 1;
+        max-height: 580px;
+        background: #fafbfb;
+        margin-bottom: 20px;
+    }
+</style>
+
+

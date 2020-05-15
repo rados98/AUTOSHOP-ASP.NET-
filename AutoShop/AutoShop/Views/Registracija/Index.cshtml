@@ -1,0 +1,115 @@
+﻿@model AutoShop.Models.EntityDB.User
+
+@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Registracija</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <center class="container">
+                <a href="@Url.Action("Index", "Pocetna")" class="navbar-brand">
+                    <span aria-hidden="true" class="fa fa-home">
+                        <strong>Pocetna</strong>
+                    </span>
+                </a> <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            </center>
+        </nav> <main class="py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">Login</div> 
+                            <div class="card-body">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    
+                                    <h3>Dobrodosli: <strong style="color:red" >@User.Identity.Name</strong></h3>
+                                    <h4>Prijavljeni ste kao: <strong style="color:red">@TempData["Roles"]</strong> </h4>
+
+                                    <a href="@Url.Action("LogOut", "Registracija")">Odjavi se</a>
+                                    <br />
+                                    <br />
+
+                                    <p><i style="color:red">OBAVESTENJE : Nekim funkcijama kao sto su podaci o korisnicima (stranica Users) i unosu u magacin (stranica Unosi u magacin) imaju samo "super admin"-i.</i></p>
+                                }
+                                else
+                                {
+                                    using (Html.BeginForm("Login", "Registracija", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                <h4>Adminovi podaci</h4>
+                                <hr />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-success" })
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",@type="email", @required="required"  } })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type="password", @required="required"  } })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Uloguj se" class="btn btn-default" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                    }
+                                }
+
+
+
+
+                                <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+                                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #17a2b8;
+        height: 100vh;
+    }
+
+    #login .container #login-row #login-column #login-box {
+        margin-top: 120px;
+        max-width: 600px;
+        height: 320px;
+        border: 1px solid #9C9C9C;
+        background-color: #EAEAEA;
+    }
+
+        #login .container #login-row #login-column #login-box #login-form {
+            padding: 20px;
+        }
+
+            #login .container #login-row #login-column #login-box #login-form #register-link {
+                margin-top: -85px;
+            }
+</style>
+

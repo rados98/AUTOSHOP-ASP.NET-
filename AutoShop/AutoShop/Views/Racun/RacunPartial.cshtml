@@ -1,0 +1,107 @@
+﻿@model  List<AutoShop.Models.EntityDB.StavkaRacuna>
+
+
+
+<div>
+    @if (@ViewBag.Racun != null)
+    {
+        DateTime datum = ViewBag.Racun.Datum;
+        TimeSpan vreme = ViewBag.Racun.Vreme;
+        string time = string.Format(vreme.ToString(), "[d'.']hh':'mm':'ss['.'fffffff]");
+    <br />
+    <h3><strong>Racun</strong> </h3> <br />
+    <h5>Sifra: <strong>@ViewBag.Racun.ID</strong><br />Datum izdavnja: <strong>@datum.ToShortDateString()</strong><br />Vreme izdavanja: <strong>@time</strong>
+    <br />Ukupna vrednost: <strong>@ViewBag.Racun.UkupnaVrednost </strong></h5> <br />
+    <br /> <h3><strong>Stavke racuna</strong></h3>
+    }
+    <div class="row">
+        @{ 
+            int brojac = 1;
+        }
+        
+
+        @foreach (var item in Model)
+        {
+        <div class="col-md-4 ">
+            
+            <dl class="dl-horizontal border border-primary rounded" style="padding:10px">
+                <dt>
+                    @Html.DisplayName("Stavka")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(brojac.ToString())
+                </dd>
+                <dt>
+                    @Html.DisplayName("Sifra stavke")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.IDStavkaRacuna.ToString())
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Magacin")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.AutoDeo_Magacin.Magacin.Grad)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Sifra proizvoda")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.AutoDeo_Magacin.AutoDeo.ID.ToString())
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Naziv proizvoda")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.AutoDeo_Magacin.AutoDeo.Naziv.ToString())
+                </dd>
+                <dt>
+                    @Html.DisplayName("Naziv proizvodjaca proizvoda")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.AutoDeo_Magacin.AutoDeo.Proizvodjac.ToString())
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Jedinicna cena proizvoda")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.AutoDeo_Magacin.AutoDeo.JedCena.ToString())
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Kolicina")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.Kolicina.ToString())
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Vrednost")
+                </dt>
+
+                <dd>
+                    @Html.DisplayName(item.Vrednost.ToString())
+                </dd>
+
+            </dl>
+            @{ brojac++;
+            }
+
+        </div>
+
+        }
+    </div>
+</div>
+

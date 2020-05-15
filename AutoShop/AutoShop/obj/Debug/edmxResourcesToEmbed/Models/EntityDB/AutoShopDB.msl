@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AutoShopModelStoreContainer" CdmEntityContainer="AutoShopEntities">
+    <EntitySetMapping Name="AutoDeo">
+      <EntityTypeMapping TypeName="AutoShopModel.AutoDeo">
+        <MappingFragment StoreEntitySet="AutoDeo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Proizvodjac" ColumnName="Proizvodjac" />
+          <ScalarProperty Name="GodProizvodnje" ColumnName="GodProizvodnje" />
+          <ScalarProperty Name="JedCena" ColumnName="JedCena" />
+          <ScalarProperty Name="Opis" ColumnName="Opis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AutoDeo_Magacin">
+      <EntityTypeMapping TypeName="AutoShopModel.AutoDeo_Magacin">
+        <MappingFragment StoreEntitySet="AutoDeo_Magacin">
+          <ScalarProperty Name="IDMagacin" ColumnName="IDMagacin" />
+          <ScalarProperty Name="IDAutoDeo" ColumnName="IDAutoDeo" />
+          <ScalarProperty Name="Stanje" ColumnName="Stanje" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Magacin">
+      <EntityTypeMapping TypeName="AutoShopModel.Magacin">
+        <MappingFragment StoreEntitySet="Magacin">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Grad" ColumnName="Grad" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Velicina" ColumnName="Velicina" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Racun">
+      <EntityTypeMapping TypeName="AutoShopModel.Racun">
+        <MappingFragment StoreEntitySet="Racun">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="Vreme" ColumnName="Vreme" />
+          <ScalarProperty Name="UkupnaVrednost" ColumnName="UkupnaVrednost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="AutoShopModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role_User">
+      <EntityTypeMapping TypeName="AutoShopModel.Role_User">
+        <MappingFragment StoreEntitySet="Role_User">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+          <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StavkaRacuna">
+      <EntityTypeMapping TypeName="AutoShopModel.StavkaRacuna">
+        <MappingFragment StoreEntitySet="StavkaRacuna">
+          <ScalarProperty Name="IDRacuna" ColumnName="IDRacuna" />
+          <ScalarProperty Name="IDStavkaRacuna" ColumnName="IDStavkaRacuna" />
+          <ScalarProperty Name="IDMagacin" ColumnName="IDMagacin" />
+          <ScalarProperty Name="IDAutoDeo" ColumnName="IDAutoDeo" />
+          <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+          <ScalarProperty Name="JedCena" ColumnName="JedCena" />
+          <ScalarProperty Name="Vrednost" ColumnName="Vrednost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnosMagacin">
+      <EntityTypeMapping TypeName="AutoShopModel.UnosMagacin">
+        <MappingFragment StoreEntitySet="UnosMagacin">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IDMagacin" ColumnName="IDMagacin" />
+          <ScalarProperty Name="IDAutoDeo" ColumnName="IDAutoDeo" />
+          <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+          <ScalarProperty Name="Datum" ColumnName="Datum" />
+          <ScalarProperty Name="Vreme" ColumnName="Vreme" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="AutoShopModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

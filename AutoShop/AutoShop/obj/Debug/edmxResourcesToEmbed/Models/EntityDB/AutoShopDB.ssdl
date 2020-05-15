@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AutoShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AutoDeo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Naziv" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Proizvodjac" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="GodProizvodnje" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="JedCena" Type="float" Nullable="false" />
+    <Property Name="Opis" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AutoDeo_Magacin">
+    <Key>
+      <PropertyRef Name="IDMagacin" />
+      <PropertyRef Name="IDAutoDeo" />
+    </Key>
+    <Property Name="IDMagacin" Type="int" Nullable="false" />
+    <Property Name="IDAutoDeo" Type="int" Nullable="false" />
+    <Property Name="Stanje" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Magacin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Grad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Adresa" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Velicina" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Racun">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Datum" Type="date" Nullable="false" />
+    <Property Name="Vreme" Type="time" Precision="7" Nullable="false" />
+    <Property Name="UkupnaVrednost" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role_User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDRole" Type="int" Nullable="false" />
+    <Property Name="IDUser" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StavkaRacuna">
+    <Key>
+      <PropertyRef Name="IDRacuna" />
+      <PropertyRef Name="IDStavkaRacuna" />
+    </Key>
+    <Property Name="IDRacuna" Type="int" Nullable="false" />
+    <Property Name="IDStavkaRacuna" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDMagacin" Type="int" Nullable="false" />
+    <Property Name="IDAutoDeo" Type="int" Nullable="false" />
+    <Property Name="Kolicina" Type="int" Nullable="false" />
+    <Property Name="JedCena" Type="float" Nullable="false" />
+    <Property Name="Vrednost" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UnosMagacin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDMagacin" Type="int" Nullable="false" />
+    <Property Name="IDAutoDeo" Type="int" Nullable="false" />
+    <Property Name="Kolicina" Type="int" Nullable="false" />
+    <Property Name="Datum" Type="date" />
+    <Property Name="Vreme" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AutoDeo_Magacin_AutoDeo">
+    <End Role="AutoDeo" Type="Self.AutoDeo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoDeo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDAutoDeo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AutoDeo_Magacin_AutoDeo_Magacin">
+    <End Role="Magacin" Type="Self.Magacin" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Magacin">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDMagacin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Role_User" Type="Self.Role_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Role_User">
+        <PropertyRef Name="IDRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_User_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Role_User" Type="Self.Role_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Role_User">
+        <PropertyRef Name="IDUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaRacuna_AutoDeo_Magacin">
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StavkaRacuna" Type="Self.StavkaRacuna" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Principal>
+      <Dependent Role="StavkaRacuna">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaRacuna_Racun">
+    <End Role="Racun" Type="Self.Racun" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StavkaRacuna" Type="Self.StavkaRacuna" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Racun">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StavkaRacuna">
+        <PropertyRef Name="IDRacuna" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnosMagacin_AutoDeo_Magacin">
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UnosMagacin" Type="Self.UnosMagacin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Principal>
+      <Dependent Role="UnosMagacin">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AutoShopModelStoreContainer">
+    <EntitySet Name="AutoDeo" EntityType="Self.AutoDeo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AutoDeo_Magacin" EntityType="Self.AutoDeo_Magacin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Magacin" EntityType="Self.Magacin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Racun" EntityType="Self.Racun" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role_User" EntityType="Self.Role_User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StavkaRacuna" EntityType="Self.StavkaRacuna" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnosMagacin" EntityType="Self.UnosMagacin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AutoDeo_Magacin_AutoDeo" Association="Self.FK_AutoDeo_Magacin_AutoDeo">
+      <End Role="AutoDeo" EntitySet="AutoDeo" />
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AutoDeo_Magacin_AutoDeo_Magacin" Association="Self.FK_AutoDeo_Magacin_AutoDeo_Magacin">
+      <End Role="Magacin" EntitySet="Magacin" />
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_User_Role" Association="Self.FK_Role_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Role_User" EntitySet="Role_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_User_User" Association="Self.FK_Role_User_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Role_User" EntitySet="Role_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaRacuna_AutoDeo_Magacin" Association="Self.FK_StavkaRacuna_AutoDeo_Magacin">
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+      <End Role="StavkaRacuna" EntitySet="StavkaRacuna" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaRacuna_Racun" Association="Self.FK_StavkaRacuna_Racun">
+      <End Role="Racun" EntitySet="Racun" />
+      <End Role="StavkaRacuna" EntitySet="StavkaRacuna" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnosMagacin_AutoDeo_Magacin" Association="Self.FK_UnosMagacin_AutoDeo_Magacin">
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+      <End Role="UnosMagacin" EntitySet="UnosMagacin" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

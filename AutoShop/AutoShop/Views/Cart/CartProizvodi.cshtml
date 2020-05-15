@@ -1,0 +1,170 @@
+﻿@model IEnumerable<AutoShop.Models.EntityDB.AutoDeo>
+@{
+    ViewBag.Title = "Cart";
+}
+
+@using AutoShop.Models.EntityDB;
+
+<h2 class="page-header" style="margin-left:auto;">
+    <strong>Korpa</strong>
+</h2>
+
+@if (TempData["ErrorCart"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorCart"]
+    </div>
+}
+
+
+@if (TempData["SuccessCart"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessCart"]
+    </div>
+}
+
+@if (TempData["SuccessRacun"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessRacun"]
+    </div>
+}
+
+@if (TempData["ErrorRacun"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorRacun"]
+    </div>
+}
+
+<br>
+<div class="row row-cols-1 row-cols-md-1" id="scroll" style="margin-top:20px; height:auto; background-color: #343a40;
+    width: auto;
+    margin: 0px;
+    padding-top: 20px;
+    height: 660px;
+    overflow: auto;">
+
+
+    @{ float brojacInput = 1000;
+        float brojacLabel = 2000;
+        float brojacButton = 5000;
+        float ukupanZbir = 0;
+        float ukupno = 0;
+        float broj = (float)Model.Count();
+        //brojac za input id i ispis(labela)?>
+    }
+    @if (broj == 0)
+    {
+        <h3 style="color:red;">Trenutno u vasoj korpi nema proizvoda. Vratite se na pocetnu stranu i dodajte proizvod koji zelite.</h3>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            //$artikli su u kontroleru 'artikli'?>
+            using (Html.BeginForm("EditCart", "Cart", new { ID = item.ID }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="col mb-12" style="margin-bottom:10px; display:inline-block;">
+                    <div class="card">
+
+                        <div class="card-body" style="display:inline;">
+
+                            <h3 class="card-title">Naziv: @item.Naziv</h3>
+
+                            <h4 style="color:red;" id="cena" class="card-title">Cena: @item.JedCena dinara </h4>
+                            <h5 class="card-text">Marka: @item.Proizvodjac</h5><br>
+                            <p class="card-text">
+                                Kolicina: <input type="number" id="@item.ID" name="@item.ID" min="1" max="99" value=@item.quantity style="margin-right:50px; width: 150px;">
+                                <button type="submit" class="btn btn-primary" name="button" value="update" id="@brojacButton" style="width:150px;align:center; margin-right:50px;">Azuriraj</button>
+                                @{ukupno = (float)(item.quantity * item.JedCena); }
+                                <label name="iznos" id="@brojacLabel" style="margin-right:180px; width:200px">Zbir: @ukupno. dinara</label>
+                                <button type="submit" class="btn btn-danger" name="button" value="delete" id="delete" style="width:150px;align:center;">Izbaci iz korpe</button>
+                            </p>
+                            @{ukupanZbir += ukupno; }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+
+
+
+</div>
+<div class="col mb-12" style="margin-bottom:10px; margin-top:20px; display:inline-block;">
+
+    <div class="card">
+
+        <div class="card-body" style="display:inline;">
+
+            <h3 id="ukupanIznos" name="ukupanIznos" class="card-title" value="@ukupanZbir">Ukupno: @ukupanZbir . dinara</h3>
+
+
+        </div>
+    </div>
+</div>
+<br>
+
+@using (Html.BeginForm("StampajRacun", "Racun"))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div id="detalji">
+                <center>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Da li ste sigurni da zelite da stampate racun sa odabranim proizvodima u korpi?')" style="width:350px; height:50px; align:center;">Stampaj racun</button>
+                </center>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    var ukupanZbirLicno = @ukupanZbir;
+    var ukupanZbirPreuzimanje=@ukupanZbir;
+   function dontShow()
+   {
+     document.getElementById('divDostava').style.visibility ='hidden';
+     izracunaj();
+      }
+   function show()
+   {
+     document.getElementById('divDostava').style.visibility ='visible';
+     izracunaj();
+   }
+   function izracunaj()
+   {
+     if(document.getElementById('divDostava').style.visibility =='hidden')
+     {
+     document.getElementById('txt-izracunaj').value="" + ukupanZbirLicno;
+   }
+   else{
+
+          @{
+              List<AutoDeo> listaUKorpi = (List<AutoDeo>)Session["cart"];
+              int brojProizvoda = listaUKorpi.Count;
+
+
+              }
+            if(ukupanZbirPreuzimanje<15000) {
+            ukupanZbirPreuzimanje=ukupanZbirLicno + @brojProizvoda*300;
+          }
+
+
+         document.getElementById('txt-izracunaj').value = "" + ukupanZbirPreuzimanje;
+   }
+
+   }
+
+
+izracunaj();
+
+</script>
+
+

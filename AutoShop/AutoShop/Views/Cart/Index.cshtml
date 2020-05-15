@@ -1,0 +1,12 @@
+﻿@using AutoShop.Models;
+@using AutoShop.Models.EntityDB;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+
+<div id="proizvod">
+    @{
+        Html.RenderAction("GetCart", "Cart", new { list = (List<AutoDeo>)Session["cart"] });
+    }
+</div>
+

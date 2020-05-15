@@ -1,0 +1,201 @@
+﻿@model IEnumerable<AutoShop.Models.EntityDB.AutoDeo>
+
+@{
+    ViewBag.Title = "Proizvodi";
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["SuccessAutoDeoMagacin"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessAutoDeoMagacin"]
+    </div>
+}
+@if (TempData["SuccessDeleteAutoDeo"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessDeleteAutoDeo"]
+    </div>
+}
+
+@if (TempData["SuccessAddNewAutoDeoInSystem"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessAddNewAutoDeoInSystem"]
+    </div>
+}
+
+    @if (TempData["SuccessEdit"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessEdit"]
+        </div>
+    }
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div style="margin-top:20px;">
+
+
+            <fieldset>
+                <legend><strong>Pretraga</strong></legend>
+                <h5></h5>
+                @Html.Label("Unesite proizvodjaca automobila: ")
+                <input type="text" id="txtsearch" placeholder="npr 'Audi'" style="width:200px;margin-left:21px;" />
+                <button type="button" id="submit" name="button">Potvrdi</button>
+                <button type="button" id="reset" name="button">Resetuj</button>
+
+
+
+            </fieldset>
+
+
+        </div>
+    }
+    <br />
+    <h2>ILI</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div style="margin-top:20px;">
+
+
+            <fieldset>
+
+                <h5></h5>
+                @Html.Label("Unesite sifru auto dela: ")
+                <input type="text" id="txtsearchID" placeholder="npr 123" style="width:200px;margin-left:93px;" />
+                <button type="button" id="submitID" name="button">Potvrdi</button>
+                <button type="button" id="resetID" name="button">Resetuj</button>
+                <a href="@Url.Action("NewAutoDeo", "Pocetna")"><button type="button" id="add" class="btn btn-primary" style="margin-right:0px; margin-left:320px;">Dodaj novi auto deo</button></a>
+
+            </fieldset>
+
+        </div>
+    }
+
+
+
+    <div id="proizvod">
+        @{
+            Html.RenderAction("GetAllAutoDeo", "Pocetna", new { i = ViewBag.Help });
+        }
+
+
+
+    </div>
+
+
+    <style media="screen">
+        #scroll {
+            background-color: #343a40;
+            width: auto;
+            margin: 0px;
+            padding-top: 20px;
+            height: 660px;
+            overflow: auto;
+        }
+    </style>
+
+
+    <style>
+        blockquote {
+            padding: 5px;
+            padding-left: 10px;
+            border-width: 0px;
+        }
+
+        h2 {
+            margin-left: 5px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $("#submit").click(function () {
+                vrednost = $('#txtsearch').val();
+                if ($("#txtsearch").val() == "")
+                    alert("Morate uneti nesto u polje za pretragu");
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Pocetna/SearchAutoDelove',
+                        data: '{ proizvodjac: "' + vrednost + '", i:"1"  }',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $("#proizvod").html(data.PartialView);
+                        }
+                    });
+
+                }
+            });
+
+            $("#reset").click(function () {
+                vrednost = "";
+                $.ajax({
+                    type: "POST",
+                    url: '/Pocetna/SearchAutoDelove',
+                    data: '{ proizvodjac: "' + vrednost + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#proizvod").html(data.PartialView);
+                    }
+                });
+
+            })
+
+
+            $("#submitID").click(function () {
+                vrednost = $('#txtsearchID').val();
+                if ($("#txtsearchID").val() == "")
+                    alert("Morate uneti nesto u polje za pretragu");
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Pocetna/SearchAutoDeloveID',
+                        data: '{ id: "' + vrednost + '", i:"1"  }',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $("#proizvod").html(data.PartialView);
+                        }
+                    });
+
+                }
+            });
+
+            $("#resetID").click(function () {
+                vrednost = -1;
+                $.ajax({
+                    type: "POST",
+                    url: '/Pocetna/SearchAutoDeloveID',
+                    data: '{ id: "' + vrednost + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#proizvod").html(data.PartialView);
+                    }
+                });
+
+            })
+
+
+        })
+
+
+
+
+    </script>
+

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<AutoShop.Models.EntityDB.User>
+
+@{
+
+    ViewBag.Title = "Korisnici";
+}
+
+@if (TempData["SuccessDeleteUser"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessDeleteUser"]
+    </div>
+}
+@if (TempData["SuccessAddNewuser"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessAddNewuser"]
+    </div>
+}
+
+
+<h2>Users</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novog korisnika", "NewUser")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Ime")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayName("Sifra")
+        </th>
+        <th>
+            @Html.DisplayName("Funkcija")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Password)
+    </td>
+    <td>
+        @Html.DisplayName(item.Role_User.Select(t => t.Role.Name).FirstOrDefault())
+    </td>
+    @if ((item.Role_User.Select(t => t.Role.Name).FirstOrDefault()) != "Super admin")
+    {
+        <td>
+            @Html.ActionLink("Obrisi", "DeleteUser", "User", new { id = item.ID }, new { onclick = "return confirm('Da li ste sigurni da zelite obrisati korisnika?');" })
+        </td>
+    }
+</tr>
+    }
+
+</table>

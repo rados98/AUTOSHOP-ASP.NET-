@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Unos u magacin";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div style="margin-top:20px;">
+
+
+        <fieldset>
+            <legend><strong>Pretraga unosa u magacin</strong></legend>
+            <h5></h5>
+            @Html.Label("Unesite datum unosa u magacin: ")
+            <input type="text" id="txtsearch" placeholder="Obavezan format -> 01-04-2020" style="width:400px;margin-left:21px;" />
+            <button type="button" id="search" name="button">Potvrdi</button>
+            <button type="button" id="all" name="button">Prikazi sve</button>
+
+
+
+        </fieldset>
+
+
+    </div>
+}
+
+<div id="unos">
+
+
+
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#search').click(function () {
+            vrednost = $('#txtsearch').val();
+            if (vrednost == "")
+                alert("Morate uneti datum!");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/UnosMagacin/SearchUnosMagacinByDate",
+                    data: '{ datum: "' + vrednost + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $('#unos').html(data.PartialView);
+                    }
+                });
+            }
+        });
+
+
+        $('#all').click(function () {
+            vrednost = "pomoc";
+            $.ajax({
+                type: "POST",
+                url: "/UnosMagacin/SearchUnosMagacinByDate",
+                data: '{ datum: "' + vrednost + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $('#unos').html(data.PartialView);
+                }
+            })
+        })
+
+    })
+</script>
+

@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div style="margin-top:20px;">
+
+
+        <fieldset>
+            <legend><strong>Pretraga racuna</strong></legend>
+            <h5></h5>
+            @Html.Label("Unesite sifru racuna: ")
+            <input type="text" id="txtsearch" placeholder="npr '12'" style="width:200px;margin-left:21px;" />
+            <button type="button" id="search" name="button">Potvrdi</button>
+            <button type="button" id="reset" name="button">Resetuj</button>
+
+
+
+        </fieldset>
+
+
+    </div>
+}
+
+<div id="stavkeRacuna">
+   
+
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#search').click(function () {
+            vrednost = $('#txtsearch').val();
+            if (vrednost == "")
+                alert("Molim vas unesite neki broj!");
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Racun/SearchRacunByID",
+                    data: '{IDRacuna: "' + vrednost + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $('#stavkeRacuna').html(data.PartialView);
+                    }
+
+                });
+            }
+        });
+
+        $('#reset').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Racun/SearchRacunByID",
+                data: '{IDRacuna: "' + 0 + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $('#stavkeRacuna').html(data.PartialView);
+                }
+            })
+            
+        })
+
+      
+    })
+        
+          
+    
+</script>

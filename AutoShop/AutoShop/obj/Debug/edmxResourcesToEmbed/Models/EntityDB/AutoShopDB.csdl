@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AutoShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AutoDeo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Proizvodjac" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GodProizvodnje" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="JedCena" Type="Double" Nullable="false" />
+    <Property Name="Opis" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AutoDeo_Magacin" Relationship="Self.FK_AutoDeo_Magacin_AutoDeo" FromRole="AutoDeo" ToRole="AutoDeo_Magacin" />
+  </EntityType>
+  <EntityType Name="AutoDeo_Magacin">
+    <Key>
+      <PropertyRef Name="IDMagacin" />
+      <PropertyRef Name="IDAutoDeo" />
+    </Key>
+    <Property Name="IDMagacin" Type="Int32" Nullable="false" />
+    <Property Name="IDAutoDeo" Type="Int32" Nullable="false" />
+    <Property Name="Stanje" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AutoDeo" Relationship="Self.FK_AutoDeo_Magacin_AutoDeo" FromRole="AutoDeo_Magacin" ToRole="AutoDeo" />
+    <NavigationProperty Name="Magacin" Relationship="Self.FK_AutoDeo_Magacin_AutoDeo_Magacin" FromRole="AutoDeo_Magacin" ToRole="Magacin" />
+    <NavigationProperty Name="StavkaRacuna" Relationship="Self.FK_StavkaRacuna_AutoDeo_Magacin" FromRole="AutoDeo_Magacin" ToRole="StavkaRacuna" />
+    <NavigationProperty Name="UnosMagacin" Relationship="Self.FK_UnosMagacin_AutoDeo_Magacin" FromRole="AutoDeo_Magacin" ToRole="UnosMagacin" />
+  </EntityType>
+  <EntityType Name="Magacin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Grad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Adresa" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Velicina" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AutoDeo_Magacin" Relationship="Self.FK_AutoDeo_Magacin_AutoDeo_Magacin" FromRole="Magacin" ToRole="AutoDeo_Magacin" />
+  </EntityType>
+  <EntityType Name="Racun">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Vreme" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="UkupnaVrednost" Type="Double" Nullable="false" />
+    <NavigationProperty Name="StavkaRacuna" Relationship="Self.FK_StavkaRacuna_Racun" FromRole="Racun" ToRole="StavkaRacuna" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Role_User" Relationship="Self.FK_Role_User_Role" FromRole="Role" ToRole="Role_User" />
+  </EntityType>
+  <EntityType Name="Role_User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDRole" Type="Int32" Nullable="false" />
+    <Property Name="IDUser" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Role_User_Role" FromRole="Role_User" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Role_User_User" FromRole="Role_User" ToRole="User" />
+  </EntityType>
+  <EntityType Name="StavkaRacuna">
+    <Key>
+      <PropertyRef Name="IDRacuna" />
+      <PropertyRef Name="IDStavkaRacuna" />
+    </Key>
+    <Property Name="IDRacuna" Type="Int32" Nullable="false" />
+    <Property Name="IDStavkaRacuna" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDMagacin" Type="Int32" Nullable="false" />
+    <Property Name="IDAutoDeo" Type="Int32" Nullable="false" />
+    <Property Name="Kolicina" Type="Int32" Nullable="false" />
+    <Property Name="JedCena" Type="Double" Nullable="false" />
+    <Property Name="Vrednost" Type="Double" Nullable="false" />
+    <NavigationProperty Name="AutoDeo_Magacin" Relationship="Self.FK_StavkaRacuna_AutoDeo_Magacin" FromRole="StavkaRacuna" ToRole="AutoDeo_Magacin" />
+    <NavigationProperty Name="Racun" Relationship="Self.FK_StavkaRacuna_Racun" FromRole="StavkaRacuna" ToRole="Racun" />
+  </EntityType>
+  <EntityType Name="UnosMagacin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDMagacin" Type="Int32" Nullable="false" />
+    <Property Name="IDAutoDeo" Type="Int32" Nullable="false" />
+    <Property Name="Kolicina" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Precision="0" />
+    <Property Name="Vreme" Type="Time" Precision="7" />
+    <NavigationProperty Name="AutoDeo_Magacin" Relationship="Self.FK_UnosMagacin_AutoDeo_Magacin" FromRole="UnosMagacin" ToRole="AutoDeo_Magacin" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Role_User" Relationship="Self.FK_Role_User_User" FromRole="User" ToRole="Role_User" />
+  </EntityType>
+  <Association Name="FK_AutoDeo_Magacin_AutoDeo">
+    <End Role="AutoDeo" Type="Self.AutoDeo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoDeo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDAutoDeo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AutoDeo_Magacin_AutoDeo_Magacin">
+    <End Role="Magacin" Type="Self.Magacin" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Magacin">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDMagacin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaRacuna_AutoDeo_Magacin">
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StavkaRacuna" Type="Self.StavkaRacuna" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Principal>
+      <Dependent Role="StavkaRacuna">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnosMagacin_AutoDeo_Magacin">
+    <End Role="AutoDeo_Magacin" Type="Self.AutoDeo_Magacin" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UnosMagacin" Type="Self.UnosMagacin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoDeo_Magacin">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Principal>
+      <Dependent Role="UnosMagacin">
+        <PropertyRef Name="IDMagacin" />
+        <PropertyRef Name="IDAutoDeo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StavkaRacuna_Racun">
+    <End Role="Racun" Type="Self.Racun" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StavkaRacuna" Type="Self.StavkaRacuna" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Racun">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StavkaRacuna">
+        <PropertyRef Name="IDRacuna" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Role_User" Type="Self.Role_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Role_User">
+        <PropertyRef Name="IDRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_User_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Role_User" Type="Self.Role_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Role_User">
+        <PropertyRef Name="IDUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AutoShopEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AutoDeo" EntityType="Self.AutoDeo" />
+    <EntitySet Name="AutoDeo_Magacin" EntityType="Self.AutoDeo_Magacin" />
+    <EntitySet Name="Magacin" EntityType="Self.Magacin" />
+    <EntitySet Name="Racun" EntityType="Self.Racun" />
+    <EntitySet Name="Role" EntityType="Self.Role" />
+    <EntitySet Name="Role_User" EntityType="Self.Role_User" />
+    <EntitySet Name="StavkaRacuna" EntityType="Self.StavkaRacuna" />
+    <EntitySet Name="UnosMagacin" EntityType="Self.UnosMagacin" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_AutoDeo_Magacin_AutoDeo" Association="Self.FK_AutoDeo_Magacin_AutoDeo">
+      <End Role="AutoDeo" EntitySet="AutoDeo" />
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AutoDeo_Magacin_AutoDeo_Magacin" Association="Self.FK_AutoDeo_Magacin_AutoDeo_Magacin">
+      <End Role="Magacin" EntitySet="Magacin" />
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaRacuna_AutoDeo_Magacin" Association="Self.FK_StavkaRacuna_AutoDeo_Magacin">
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+      <End Role="StavkaRacuna" EntitySet="StavkaRacuna" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnosMagacin_AutoDeo_Magacin" Association="Self.FK_UnosMagacin_AutoDeo_Magacin">
+      <End Role="AutoDeo_Magacin" EntitySet="AutoDeo_Magacin" />
+      <End Role="UnosMagacin" EntitySet="UnosMagacin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StavkaRacuna_Racun" Association="Self.FK_StavkaRacuna_Racun">
+      <End Role="Racun" EntitySet="Racun" />
+      <End Role="StavkaRacuna" EntitySet="StavkaRacuna" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_User_Role" Association="Self.FK_Role_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Role_User" EntitySet="Role_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_User_User" Association="Self.FK_Role_User_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Role_User" EntitySet="Role_User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
